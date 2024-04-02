@@ -1,8 +1,8 @@
 AFRAME.registerComponent("arrows", {
     init: function () {
-      this.hitArrow();
+      this.shootArrow();
     },
-    shootarrow: function () {
+    shootArrow: function () {
       window.addEventListener("keydown", (e) => {
         if (e.key === "z") {
           var arrow = document.createElement("a-entity");
@@ -38,13 +38,13 @@ AFRAME.registerComponent("arrows", {
             mass: "0",
           });
  
-          arrow.addEventListener("collide", this.removearrow);
+          arrow.addEventListener("collide", this.removeArrow);
   
           scene.appendChild(arrow);
         }
       });
     },
-    removearrow: function (e) {
+    removeArrow: function (e) {
       console.log(e.detail.target.el);
   
       console.log(e.detail.body.el);
@@ -53,7 +53,7 @@ AFRAME.registerComponent("arrows", {
   
       var elementHit = e.detail.body.el;
   
-      if (elementHit.id.includes("box")) {
+      if (elementHit.id.includes("target")) {
         elementHit.setAttribute("material", {
           opacity: 1,
           transparent: true,
@@ -66,7 +66,7 @@ AFRAME.registerComponent("arrows", {
   
         elementHit.body.applyImpulse(impulse, worldPoint);
 
-        element.removeEventListener("collide", this.shoot);
+        element.removeEventListener("collide", this.arrow);
 
         var scene = document.querySelector("#scene");
         scene.removeChild(element);
